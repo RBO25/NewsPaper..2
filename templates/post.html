@@ -1,0 +1,12 @@
+{% extends 'flatpages/default.html' %}
+{% load censor_filters %}
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+<h1>{{ post.name|censor }}</h1>
+<h2>{{ post.description|censor }}</h2>
+<h3>привет</h3>
+{{ time_now|date:'d M Y' }}
+{% endblock content %}

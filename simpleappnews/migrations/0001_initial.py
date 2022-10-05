@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField()),
                 ('quantity', models.IntegerField(validators=[django.core.validators.MinValueValidator(0)])),
                 ('rating', models.FloatField(validators=[django.core.validators.MinValueValidator(0.0)])),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='news', to='simpleapp.category')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='news', to='simpleappnews.category')),
             ],
         ),
     ]

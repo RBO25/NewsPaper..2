@@ -1,6 +1,9 @@
 from django.apps import AppConfig
 
 
-class SimpleappConfig(AppConfig):
+class SimpleappnewsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'simpleappnews'
+    name = 'Category'
+
+    def ready(self):
+        import simpleappnews.signals

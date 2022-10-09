@@ -7,6 +7,20 @@ Post
 {% block content %}
 <h1>{{ post.name|censor }}</h1>
 <h2>{{ post.description|censor }}</h2>
-<h3>привет</h3>
 {{ time_now|date:'d M Y' }}
+
+{% if request.user.is_authenticated %}
+{% csrf_token %}
+
+            {% if subscribers %}
+                 <p>Подписаться на новости:
+               <button><a href="{% url 'subscribe' news_.id %}">Подписаться</a></button></p>
+<!--                 <p>Отписаться от новостей:-->
+<!--                <button><a href="{% url 'unsubscribe' news_.id %}">Отписаться</a></button></p>-->
+<!--            {% else %}-->
+{%endif%}
+
+
+{% endif %}
+
 {% endblock content %}

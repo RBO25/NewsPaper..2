@@ -42,16 +42,25 @@ INSTALLED_APPS = [
     'accounts',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'simpleappnews',
+    'simpleappnews.app.SimpleappnewsCongig',
     'django_filters',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'protect',
+    'simpleappnews.apps.SimpleappnewsConfig',
+    'django_apscheduler',
 ]
 
+DEFAULT_FROM_EMAIL = 'rimmabogrets@yandex.ru'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'
+
 SITE_ID = 1
+
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
 
 MIDDLEWARE = [
@@ -158,6 +167,21 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+SITE_URL = 'http://127.0.0:8000'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'rmmabogrets'
+EMAIL_HOST_PASSWORD = '25011991'
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+ADMINS = [
+    ('Cooba', 'cooba@gmail.com'),
+    # список всех админов в формате ('имя', 'их почта')
+]
+SERVER_EMAIL = 'rimmabogrets@yandex.ru'
 
 ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}

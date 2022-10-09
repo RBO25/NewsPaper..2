@@ -1,5 +1,7 @@
 from datetime import datetime
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+
+
 from .models import Post, Category
 from .filters import SearchFilter
 from .forms import PostForm
@@ -10,7 +12,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.shortcuts import render, reverse, redirect
+from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import mail_managers
@@ -138,30 +140,30 @@ def subscribe(request, pk):
     category.subscribers.add(user)
 
     message = 'Вы подписались на рассылку новостей.'
-    return render(request, 'news/subscribe.html', {'category': category, 'message': message}
+    return render(request, 'news/subscribe.html', {'category': category, 'message': message})
 
-
-    def get(self, request, *args, **kwargs):
-        return render(request, 'mail.html', {})
-
-    def post(self, request, *args, **kwargs):
-        category = Category(date=datetime.strptime(request.POST['date'], '%Y-%m-%d'), name=request.POST['client_name'])
-        category.save()
-
-        html_content = render_to_string(
-            'mail.html',
-            {
-                'category': category,
-            }
-        )
-
-        msg = EmailMultiAlternatives(
-            subject=f'{category.name} {category.date.strftime("%Y-%M-%d")}',
-            from_email='rimmabogrets@yandex.ry',
-            to=['cooba@gmail.com'],
-        )
-        msg.attach_alternative(html_content, "text/html")  # добавляем html
-
-        msg.send()  # отсылаем
-
-        return redirect(simpleappnews:make_category')
+    #
+    # def get(self, request, *args, **kwargs):
+    #     return render(request, 'mail.html', {})
+    #
+    # def post(self, request, *args, **kwargs):
+    #     category = Category(date=datetime.strptime(request.POST['date'], '%Y-%m-%d'), name=request.POST['client_name'])
+    #     category.save()
+    #
+    #     html_content = render_to_string(
+    #         'mail.html',
+    #         {
+    #             'category': category,
+    #         }
+    #     )
+    #
+    #     msg = EmailMultiAlternatives(
+    #         subject=f'{category.name} {category.date.strftime("%Y-%M-%d")}',
+    #         from_email='rimmabogrets@yandex.ry',
+    #         to=['cooba@gmail.com'],
+    #     )
+    #     msg.attach_alternative(html_content, "text/html")  # добавляем html
+    #
+    #     msg.send()  # отсылаем
+    #
+    #     return redirect('simpleappnews:make_category')

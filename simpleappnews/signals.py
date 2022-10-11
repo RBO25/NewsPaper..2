@@ -1,12 +1,15 @@
+import email
+
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver # импортируем нужный декоратор
 from django.core.mail import EmailMultiAlternatives
 from .models import Category
 from django.template.loader import render_to_string
 from django.conf import settings
+from .tasks import celery_notify_subscribers
 
 
-def send_notifications(preview, pk, title, subscribers):
+def send_notifications(preview, pk, title, subscribers,):
     html_context = render_to_string(
         'mail.html',
         {
@@ -24,6 +27,8 @@ def send_notifications(preview, pk, title, subscribers):
 
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
+    
+    celery_notify_subscribers.delay(title, preview, email, html_content)
 
 # создаём функцию-обработчик с параметрами под регистрацию сигнала
 @receiver(m2m_changed, sender=Category)
@@ -34,6 +39,7 @@ def notify_about_new_post(sender, instance, created, **kwargs):
         for category in categories:
             subscribers += category.subscribers.all()
 
-        subscribers = [s.mail for s in subscribers]
+        subscribers = [email for s in subscribers]
 
         send_notifications(instance.preview(), instance.id, instance.title, subscribers)
+        

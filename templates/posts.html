@@ -7,6 +7,8 @@ Posts
 {% endblock title %}
 
 {% block content %}
+    {% load cache %}
+    {% cache 60 content %}
     <h1>Все новости  {{ posts|length }}</h1>
 
 <form action="" method="get">
@@ -53,5 +55,5 @@ Posts
            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
        {% endif %}
    {% endif %}
-
+    {% endcache %}
 {% endblock content %}

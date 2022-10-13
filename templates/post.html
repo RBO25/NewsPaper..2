@@ -5,9 +5,11 @@ Post
 {% endblock title %}
 
 {% block content %}
-<h1>{{ post.name|censor }}</h1>
-<h2>{{ post.description|censor }}</h2>
-{{ time_now|date:'d M Y' }}
+    {% load cache %}
+    {% cache 300 content %}
+        <h1>{{ post.name|censor }}</h1>
+        <h2>{{ post.description|censor }}</h2>
+        {{ time_now|date:'d M Y' }}
 
 {% if request.user.is_authenticated %}
 {% csrf_token %}
@@ -22,5 +24,6 @@ Post
 
 
 {% endif %}
+    {% endcache %}
 
 {% endblock content %}

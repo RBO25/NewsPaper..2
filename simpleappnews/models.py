@@ -22,6 +22,20 @@ class Post(models.Model):
         super().save(*args, **kwargs)  # сначала вызываем метод родителя, чтобы объект сохранился
         cache.delete(f'post-{self.pk}')  # затем удаляем его из кэша, чтобы сбросить его
 
+    @property
+    def on_stock(self):
+        return self.quantity > 0
+
+    def __str__(self):
+        return f'{self.name} {self.quantity}'
+
+    def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с товаром
+        return f'/post/{self.id}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'post-{self.pk}')
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)

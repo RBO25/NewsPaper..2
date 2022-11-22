@@ -1,0 +1,29 @@
+#version: '3.5'
+#
+#services:
+#  db_NewsPaper:
+#    container_name: db_NewsPaper
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      - POSTGRES_PASSWORD=root
+#      - POSTGRES_USER=admin
+#    image: postgres:15.1-alpine
+
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    container_name: db_NewsPaper
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123123
+      POSTGRES_USER: admin
+      POSTGRES_DB: db1
+      PG_DATA: \Users\куба\pythonNP-master\NewsPaper
+      POSTGRES_INITDB_ARGS: "-A md5"
+    ports:
+      - "5432:5432"

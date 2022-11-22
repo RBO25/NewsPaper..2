@@ -16,6 +16,10 @@ from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import mail_managers
+import logging
+
+
+logger = logging.getLogger('django')
 
 
 class PostsList(ListView):
